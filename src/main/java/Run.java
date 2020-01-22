@@ -1,10 +1,9 @@
-import freemarker.template.Configuration;
-import freemarker.template.TemplateExceptionHandler;
+import org.apache.commons.io.FilenameUtils;
 import util.FreemakerUtil;
 import util.QiniuUtil;
+import util.UuidUtil;
 
 import java.io.File;
-import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -15,16 +14,28 @@ import java.util.Map;
  */
 public class Run {
     public static void main(String[] args) throws Exception {
-        File videoFile = new File("");
+        String filename = "Desktop 2020.01.22 - 16.28.57.01.mp4";
+        File videoFile = new File("C:\\Users\\Administrator\\Videos\\Desktop\\" + filename);
+        String videoName = FilenameUtils.getBaseName(videoFile.getName());
+        String uuid = UuidUtil.getUuid();
         //视频转码
         //上传视频
-//        String videoUrl = QiniuUtil.upload(videoFile.getAbsolutePath(), videoFile.getName());
+        String videoUrl = QiniuUtil.upload(videoFile.getAbsolutePath(),
+                videoName + "-" + uuid + "." + FilenameUtils.getExtension(videoFile.getName())
+        );
         //制作html
         Map<String, String> params = new HashMap<>();
-        params.put("ccc", "fwwfea");
-        File htmlByMode = FreemakerUtil.createHtmlByMode("video.ftl", "test.html", params);
-        System.out.println(htmlByMode);
+        params.put("title", videoName);
+        params.put("videoName", videoName);
+        params.put("videoUrl", videoUrl);
+        File htmlFile = FreemakerUtil.createHtmlByMode("video.html.ftl", "video.html", params);
         //上传html
+        String htmlUrl = QiniuUtil.upload(htmlFile.getPath(),
+                videoName.replace(" ", "-")
+                        + "-" + uuid + "." + FilenameUtils.getExtension(htmlFile.getName()));
         //拿到链接
+        System.out.println(htmlUrl);
+        //删除html文件
+        htmlFile.delete();
     }
 }
