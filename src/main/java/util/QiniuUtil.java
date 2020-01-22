@@ -36,9 +36,4 @@ public class QiniuUtil {
             return null;
         }
     }
-
-    public static void main(String[] args) {
-        String url = upload("C:\\Users\\Javascripts\\EnfocusSupport.js", "awfeafewawge");
-        System.out.println(url);
-    }
 }
