@@ -1,6 +1,7 @@
+package run.qiniu;
+
 import org.apache.commons.io.FilenameUtils;
 import util.FreemakerUtil;
-import util.QiniuUtil;
 import util.UuidUtil;
 
 import java.io.File;
@@ -8,11 +9,11 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
- * 全自动跑起来
+ * 七牛云，全自动跑起来，谁用七牛，就是贵啊
  *
  * @time 2020-01-22 11:23
  */
-public class Run {
+public class UploadToQiniu {
     public static void main(String[] args) throws Exception {
         String folder = "C:\\Users\\Administrator\\Videos\\Desktop\\";
         String filename = "2020.01.31GoogleEarth演示_out.mp4";
